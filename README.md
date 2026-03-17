@@ -1,4 +1,4 @@
-# 🌸 Aura: Offline Health & Productivity Companion
+# 🌸 Aura: Health & Productivity Companion
 
 Aura is a privacy-first women's health assistant built for HackHerThon. It combines a clinical Retrieval-Augmented Generation (RAG) pipeline with a deterministic hormonal cycle scheduler to optimize a user's diet, workflow, and well-being.
 
