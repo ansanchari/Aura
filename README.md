@@ -1,6 +1,6 @@
 # 🌸 Aura: Offline Health & Productivity Companion
 
-Aura is a privacy-first, locally-run women's health assistant built for [Insert Hackathon Name]. It combines a clinical Retrieval-Augmented Generation (RAG) pipeline with a deterministic hormonal cycle scheduler to optimize a user's diet, workflow, and well-being.
+Aura is a privacy-first women's health assistant built for HackHerThon. It combines a clinical Retrieval-Augmented Generation (RAG) pipeline with a deterministic hormonal cycle scheduler to optimize a user's diet, workflow, and well-being.
 
 ## 🚀 Features
 * **Secure Medical Brain:** Uses Qdrant and Mistral AI to answer health questions using only peer-reviewed, locally embedded clinical data. Zero hallucinations.
