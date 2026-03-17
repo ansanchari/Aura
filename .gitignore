@@ -1,0 +1,5 @@
+.env
+aura_env/
+__pycache__/
+qdrant_aura_db/
+user_profile.json
