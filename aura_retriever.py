@@ -10,8 +10,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import PromptTemplate
 
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains import create_retrieval_chain
+from langchain_classic.chains.combine_documents import create_stuff_documents_chain
+from langchain_classic.chains import create_retrieval_chain
 
 load_dotenv()
 
@@ -19,11 +19,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class AuraHealthRouter:
-    def __init__(self, github_db_path: str = "./qdrant_db"): # ⚠️ Ensure this is your actual local DB folder name
-        logger.info("Initializing Aura's Retrieval System...")
+    def __init__(self, github_db_path: str = "./qdrant_aura_db"):
         
-        # --- THE BULLETPROOF STREAMLIT HACK ---
-        # Generate a unique temp folder that guarantees no .lock file collisions
         writable_db_path = tempfile.mkdtemp(prefix="aura_db_")
         
         logger.info(f"Moving database to secure Linux memory: {writable_db_path}")
@@ -37,7 +34,6 @@ class AuraHealthRouter:
             path=writable_db_path,
             force_disable_check_same_thread=True
         )
-        # ---------------------------------------
         
         self.embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
         

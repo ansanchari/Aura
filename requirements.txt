@@ -1,8 +1,8 @@
-biopython
-streamlit
-langchain
-langchain-community
-langchain-core
+biopython>=1.83
+streamlit>=1.32.0
+langchain>=0.1.13
+langchain-classic
+langchain-community>=0.0.29
 langchain-mistralai
 langchain-huggingface
 langchain-qdrant
