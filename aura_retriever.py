@@ -1,6 +1,7 @@
 import logging
 import os
 import shutil
+import tempfile
 from dotenv import load_dotenv
 
 from langchain_qdrant import QdrantVectorStore
@@ -18,23 +19,25 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class AuraHealthRouter:
-    def __init__(self, github_db_path: str = "./qdrant_aura_db"):
+    def __init__(self, github_db_path: str = "./qdrant_db"): # ⚠️ Ensure this is your actual local DB folder name
         logger.info("Initializing Aura's Retrieval System...")
         
-        writable_db_path = "/tmp/aura_qdrant_db"
+        # --- THE BULLETPROOF STREAMLIT HACK ---
+        # Generate a unique temp folder that guarantees no .lock file collisions
+        writable_db_path = tempfile.mkdtemp(prefix="aura_db_")
         
-        if not os.path.exists(writable_db_path):
-            logger.info("Moving database to writable Linux memory...")
-            try:
-                shutil.copytree(github_db_path, writable_db_path)
-            except Exception as e:
-                logger.error(f"Failed to copy DB: {e}")
+        logger.info(f"Moving database to secure Linux memory: {writable_db_path}")
+        try:
+            shutil.copytree(github_db_path, writable_db_path, dirs_exist_ok=True)
+        except Exception as e:
+            logger.error(f"Failed to copy DB: {e}")
         
         logger.info("Connecting to writable vector database...")
         self.client = QdrantClient(
             path=writable_db_path,
             force_disable_check_same_thread=True
         )
+        # ---------------------------------------
         
         self.embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
         
