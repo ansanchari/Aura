@@ -57,6 +57,17 @@ def generate_pdf(phase_name, diet_plan, highly_recommended):
     pdf.cell(0, 10, "Diet & Nutrition:", ln=True)
     pdf.set_font("helvetica", size=11)
     clean_diet = diet_plan.replace('*', '') if diet_plan else "No plan generated."
+    clean_diet = str(diet_plan)
+    replacements = {
+        '“': '"', '”': '"', 
+        '‘': "'", '’': "'", 
+        '—': '-', '–': '-', 
+        '•': '-', '*': '-'
+    }
+    for old, new in replacements.items():
+        clean_diet = clean_diet.replace(old, new)
+    
+    clean_diet = clean_diet.encode('latin-1', 'ignore').decode('latin-1')
     pdf.multi_cell(0, 8, clean_diet)
     pdf.ln(5)
     
