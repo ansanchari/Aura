@@ -1,10 +1,14 @@
 biopython
 streamlit
 langchain
-langchain-classic
+langchain-community
 langchain-mistralai
 langchain-huggingface
 langchain-qdrant
 qdrant-client
 python-dotenv
 sentence-transformers
+plotly
+audio-recorder-streamlit
+SpeechRecognition
+fpdf2
