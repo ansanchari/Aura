@@ -1,6 +1,6 @@
 # 🌸 Aura | Women's Health AI Companion
 
-![Aura Hero Image](Screenshot 2026-03-18 214630.png) 
+![Aura Hero Image](aura.png) 
 
 **Aura** is a clinical AI companion designed to provide deterministic, medically accurate women's health insights without compromising user privacy. Built with a localized Retrieval-Augmented Generation (RAG) pipeline, it ensures zero data leakage of sensitive reproductive queries.
 
