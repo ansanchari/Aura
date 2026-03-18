@@ -2,6 +2,7 @@ biopython
 streamlit
 langchain
 langchain-community
+langchain-core
 langchain-mistralai
 langchain-huggingface
 langchain-qdrant
