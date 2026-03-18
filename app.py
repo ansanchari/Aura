@@ -10,10 +10,8 @@ from audio_recorder_streamlit import audio_recorder
 from aura_retriever import AuraHealthRouter
 from cycle_scheduler import CycleScheduler, UserProfile
 
-# 1. Page Configuration
 st.set_page_config(page_title="Aura | Offline Health & Productivity", page_icon="🌸", layout="wide")
 
-# --- THE PREMIUM WELLNESS UI INJECTION ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
@@ -30,7 +28,6 @@ st.markdown("""
     [data-testid="stVerticalBlockBorderWrapper"] { background: rgba(255, 255, 255, 0.6) !important; backdrop-filter: blur(10px) !important; border-radius: 16px !important; border: 1px solid rgba(255, 255, 255, 0.8) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important; }
     .stChatMessage { background-color: #FFFFFF; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #F1F5F9; margin-bottom: 12px; }
 
-    /* Styled Input Boxes (Single Line) */
     .stTextInput>div>div>input {
         border-radius: 12px; border: 1px solid #E2E8F0; background-color: #FFFFFF; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     }
@@ -38,7 +35,6 @@ st.markdown("""
         border-color: #FF7EB3; box-shadow: 0 0 0 2px rgba(255, 126, 179, 0.2);
     }
 
-    /* Premium Lined Notepad Effect for Task List */
     .stTextArea textarea {
         background-color: #FFFFFF !important;
         background-image: repeating-linear-gradient(transparent, transparent 31px, #F1F5F9 31px, #F1F5F9 32px) !important;
@@ -50,7 +46,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Helper Function: PDF Generator
 def generate_pdf(phase_name, diet_plan, highly_recommended):
     pdf = FPDF()
     pdf.add_page()
@@ -73,7 +68,6 @@ def generate_pdf(phase_name, diet_plan, highly_recommended):
         
     return bytes(pdf.output())
 
-# 2. Initialize Backend Modules
 @st.cache_resource
 def load_ai_brain():
     return AuraHealthRouter()
@@ -85,7 +79,6 @@ def load_scheduler():
 aura_agent = load_ai_brain()
 scheduler, profile = load_scheduler()
 
-# 3. The Sidebar
 st.sidebar.markdown("""<div style="text-align: center; padding-bottom: 20px;"><h2 style="font-size: 2.2rem; margin:0; background: linear-gradient(90deg, #FF758C 0%, #FF7EB3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🌸 Aura</h2></div>""", unsafe_allow_html=True)
 
 current_day = profile.get_current_cycle_day()
@@ -101,12 +94,10 @@ if st.sidebar.button("Lock In Date"):
     profile.lock_in_start_date(new_start_date)
     st.rerun()
 
-# 4. The Main Interface (Hero Header)
 st.markdown("""<div style="text-align: center; padding: 2rem 0 2rem 0;"><h1 style="font-size: 3.5rem; margin-bottom: 0;">Welcome to <span style="background: linear-gradient(90deg, #FF758C 0%, #FF7EB3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Aura</span></h1><p style="font-size: 1.2rem; color: #64748B; font-weight: 300;">Your secure, offline-first women's health and productivity companion.</p></div>""", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["💬 Medical AI Chat", "⚡ Autonomous Lifestyle"])
 
-# --- TAB 1: Medical Chatbot ---
 with tab1:
     st.markdown("### Clinical Knowledge Base")
     
@@ -153,24 +144,20 @@ with tab1:
         st.session_state.messages.append({"role": "assistant", "content": response})
         st.rerun()
 
-# --- TAB 2: Lifestyle & Productivity Engine ---
 with tab2:
     if not current_day:
         st.info("👈 Please set your cycle start date in the sidebar to unlock lifestyle features.")
     else:
         phase_name, phase_data = scheduler.get_current_phase(current_day)
         
-        # Premium Phase Overview Card with Plotly Glider
         with st.container(border=True):
             col_chart, col_text = st.columns([1, 2], gap="large")
             with col_chart:
                 phases = ['Menstrual', 'Follicular', 'Ovulatory', 'Luteal']
                 days_in_phase = [5, 8, 4, 11] 
                 
-                # Colors picked directly from your uploaded mockup
                 colors = ['#BD1A47', '#FAD1DA', '#F68EAD', '#F24D79'] 
                 
-                # --- Glider Math ---
                 angle_deg = ((current_day - 0.5) / 28) * 360
                 angle_rad = math.radians(angle_deg)
                 
@@ -188,22 +175,17 @@ with tab2:
                     showlegend=False, margin=dict(t=0, b=0, l=0, r=0), 
                     paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', height=280, 
                     annotations=[
-                        # Center Typography
                         dict(text="DAY", x=0.5, y=0.58, font_size=16, font_color='#8FA0B5', showarrow=False),
                         dict(text=str(current_day), x=0.5, y=0.38, font_size=64, font_color='#1E293B', showarrow=False),
                         
-                        # --- THE PREMIUM GLIDER STACK ---
-                        # Layer 1: The Drop Shadow (Shifted down slightly via y - 0.015)
                         dict(
                             text="●", x=glider_x, y=glider_y - 0.015, font_size=62, 
                             font_color='rgba(0,0,0,0.15)', showarrow=False, xanchor='center', yanchor='middle'
                         ),
-                        # Layer 2: The Thick White Border
                         dict(
                             text="●", x=glider_x, y=glider_y, font_size=62, 
                             font_color='#FFFFFF', showarrow=False, xanchor='center', yanchor='middle'
                         ),
-                        # Layer 3: The Deep Red Inner Dot
                         dict(
                             text="●", x=glider_x, y=glider_y, font_size=46, 
                             font_color='#BD1A47', showarrow=False, xanchor='center', yanchor='middle'
@@ -220,7 +202,6 @@ with tab2:
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # --- PREDICTIVE DIET & SKELETON LOADER ---
         st.markdown("#### 🛒 Predictive Nutrition Planner")
         
         if "diet_plan" not in st.session_state:
@@ -243,7 +224,6 @@ with tab2:
             with st.container(border=True):
                 st.markdown(st.session_state.diet_plan)
 
-        # --- TO-DO LIST & PDF EXPORT ---
         st.markdown("<br><hr>", unsafe_allow_html=True)
         st.markdown("#### ⚡ Intelligent Task Routing")
         
