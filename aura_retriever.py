@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 from dotenv import load_dotenv
 
 from langchain_qdrant import QdrantVectorStore
@@ -7,8 +8,9 @@ from qdrant_client import QdrantClient
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import PromptTemplate
-from langchain_classic.chains.combine_documents import create_stuff_documents_chain
-from langchain_classic.chains import create_retrieval_chain
+
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain.chains import create_retrieval_chain
 
 load_dotenv()
 
@@ -16,12 +18,25 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class AuraHealthRouter:
-    def __init__(self, db_path: str = "./qdrant_aura_db"):
+    def __init__(self, github_db_path: str = "./qdrant_aura_db"):
         logger.info("Initializing Aura's Retrieval System...")
-        logger.info("Connecting to local vector database...")
+        
+        writable_db_path = "/tmp/aura_qdrant_db"
+        
+        if not os.path.exists(writable_db_path):
+            logger.info("Moving database to writable Linux memory...")
+            try:
+                shutil.copytree(github_db_path, writable_db_path)
+            except Exception as e:
+                logger.error(f"Failed to copy DB: {e}")
+        
+        logger.info("Connecting to writable vector database...")
+        self.client = QdrantClient(
+            path=writable_db_path,
+            force_disable_check_same_thread=True
+        )
         
         self.embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-        self.client = QdrantClient(path=db_path)
         
         self.vector_store = QdrantVectorStore(
             client=self.client,
