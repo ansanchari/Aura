@@ -10,7 +10,7 @@ from audio_recorder_streamlit import audio_recorder
 from aura_retriever import AuraHealthRouter
 from cycle_scheduler import CycleScheduler, UserProfile
 
-st.set_page_config(page_title="Aura | Offline Health & Productivity", page_icon="🌸", layout="wide")
+st.set_page_config(page_title="Aura | Health & Productivity", page_icon="🌸", layout="wide")
 
 st.markdown("""
 <style>
