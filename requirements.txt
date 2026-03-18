@@ -1,3 +1,4 @@
+biopython
 streamlit
 langchain
 langchain-classic
