@@ -105,7 +105,7 @@ if st.sidebar.button("Lock In Date"):
     profile.lock_in_start_date(new_start_date)
     st.rerun()
 
-st.markdown("""<div style="text-align: center; padding: 2rem 0 2rem 0;"><h1 style="font-size: 3.5rem; margin-bottom: 0;">Welcome to <span style="background: linear-gradient(90deg, #FF758C 0%, #FF7EB3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Aura</span></h1><p style="font-size: 1.2rem; color: #64748B; font-weight: 300;">Your secure, offline-first women's health and productivity companion.</p></div>""", unsafe_allow_html=True)
+st.markdown("""<div style="text-align: center; padding: 2rem 0 2rem 0;"><h1 style="font-size: 3.5rem; margin-bottom: 0;">Welcome to <span style="background: linear-gradient(90deg, #FF758C 0%, #FF7EB3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Aura</span></h1><p style="font-size: 1.2rem; color: #64748B; font-weight: 300;">Your health and productivity companion.</p></div>""", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["💬 Medical AI Chat", "⚡ Autonomous Lifestyle"])
 
